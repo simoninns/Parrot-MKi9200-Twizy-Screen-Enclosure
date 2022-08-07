@@ -35,8 +35,32 @@ module screen_cutout()
 module car_mount()
 {
     move([-11,6,-3]) {
-        move([-24,2,0]) rotate([0,0,55]) cuboid([50,3,32], center=false, chamfer=1); // Car side mount
         move([-2.5,38,0]) rotate([0,0,-55]) cuboid([44,3,10], center=false, chamfer=1); // Strength
+
+        // Curved mounting with 200mm diameter curve
+        difference() {
+            union() {
+                move([-138, 100, 40]) {
+                    rotate ([45,-45,0]) {
+                        difference() {
+                            cyl(h=100,d=300, $fn=200);
+                            cyl(h=100 + 4,d=300 - 6, $fn=200);
+                        }
+                    }
+                }
+
+                difference() {
+                    move([-25,9,16]) cuboid([3,10,32], chamfer=1, edges=EDGE_BOT_LF);
+                    move([-138, 100, 40]) rotate ([45,-45,0]) cyl(h=100 + 4,d=300 - 6, $fn=200);
+                }
+            }
+
+            move([0,0,-100]) cuboid([800,500,200]);
+            move([-176.5,0,0]) cuboid([300,500,400]);
+            move([0,0,100]) cuboid([100,400,130]);
+        }
+
+        
     }
 }
 
